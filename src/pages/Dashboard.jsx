@@ -113,7 +113,7 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const token = Cookies.get('access_token');
-        const response = await fetch('http://127.0.0.1:8000/servers/', {
+        const response = await fetch('/api/servers/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const Dashboard = () => {
   const fetchContainersForServer = async (serverId) => {
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverId}/containers/`, {
+      const response = await fetch(`/api/servers/${serverId}/containers/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ const Dashboard = () => {
     setActionLoading((prev) => ({ ...prev, [containerId]: action }));
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverId}/containers/${containerId}/${action}`, {
+      const response = await fetch(`/api/servers/${serverId}/containers/${containerId}/${action}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ const Dashboard = () => {
   const updateContainerActiveStatus = async (serverId, containerId, is_active) => {
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverId}/containers/${containerId}`, {
+      const response = await fetch(`/api/servers/${serverId}/containers/${containerId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -293,7 +293,7 @@ const Dashboard = () => {
     const { name, image, ports, env, extra_args, is_active } = editForm;
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverId}/containers/${editContainer.id}`, {
+      const response = await fetch(`/api/servers/${serverId}/containers/${editContainer.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -326,7 +326,7 @@ const Dashboard = () => {
   const updateServer = async (serverId, updateData) => {
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverId}`, {
+      const response = await fetch(`/api/servers/${serverId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -397,7 +397,7 @@ const Dashboard = () => {
     setServerDeleteLoading(true);
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${serverToDelete.id}`, {
+      const response = await fetch(`/api/servers/${serverToDelete.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -422,7 +422,7 @@ const Dashboard = () => {
     setContainerDeleteLoading(true);
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${containerToDelete.server_id}/containers/${containerToDelete.id}`, {
+      const response = await fetch(`/api/servers/${containerToDelete.server_id}/containers/${containerToDelete.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -472,7 +472,7 @@ const Dashboard = () => {
     }
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`http://127.0.0.1:8000/servers/${addContainerServerId}/containers/`, {
+      const response = await fetch(`/api/servers/${addContainerServerId}/containers/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -523,7 +523,7 @@ const Dashboard = () => {
     setServerSubmitting(true);
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch('http://127.0.0.1:8000/servers/', {
+      const response = await fetch('/api/servers/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

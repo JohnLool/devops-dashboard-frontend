@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    container_name: react_frontend
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true

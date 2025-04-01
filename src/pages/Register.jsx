@@ -22,7 +22,7 @@ const Register = () => {
     setError('');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/users', {
+      const response = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password })
