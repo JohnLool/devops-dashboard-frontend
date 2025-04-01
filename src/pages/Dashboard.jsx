@@ -113,7 +113,7 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const token = Cookies.get('access_token');
-        const response = await fetch('/api/servers/', {
+        const response = await fetch('/api/servers', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const Dashboard = () => {
   const fetchContainersForServer = async (serverId) => {
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`/api/servers/${serverId}/containers/`, {
+      const response = await fetch(`/api/servers/${serverId}/containers`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -472,7 +472,7 @@ const Dashboard = () => {
     }
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch(`/api/servers/${addContainerServerId}/containers/`, {
+      const response = await fetch(`/api/servers/${addContainerServerId}/containers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -523,7 +523,7 @@ const Dashboard = () => {
     setServerSubmitting(true);
     try {
       const token = Cookies.get('access_token');
-      const response = await fetch('/api/servers/', {
+      const response = await fetch('/api/servers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
