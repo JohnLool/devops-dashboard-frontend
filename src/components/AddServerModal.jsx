@@ -64,7 +64,7 @@ const AddServerModal = ({
               onChange={e => setServerForm({ ...serverForm, port: e.target.value })}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Example: 443"
+              placeholder="Example: 22"
             />
           </div>
           <div className="mb-4">

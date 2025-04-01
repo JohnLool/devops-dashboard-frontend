@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -14,10 +14,11 @@ import ConfirmModal from '../components/ConfirmModal';
 import EditServerModal from '../components/EditServerModal';
 import ConfirmServerDeleteModal from '../components/ConfirmServerDeleteModal';
 import ConfirmContainerDeleteModal from '../components/ConfirmContainerDeleteModal';
+import ConfirmServerModal from '../components/ConfirmServerModal';
 import AddContainerModal from '../components/AddContainerModal';
 import InfoServerModal from '../components/InfoServerModal';
 import InfoContainerModal from '../components/InfoContainerModal';
-import Spinner from '../components/Spinner';
+
 
 const Dashboard = () => {
   const [servers, setServers] = useState([]);
@@ -62,7 +63,7 @@ const Dashboard = () => {
     ssh_private_key: ''
   });
   const [serverEditSubmitting, setServerEditSubmitting] = useState(false);
-  const [showConfirmServer, setShowConfirmServer] = useState(false);
+  const [showConfirmServer, setShowConfirmServer] = useState(false); // для подтверждения редактирования сервера
   const [showConfirmServerDelete, setShowConfirmServerDelete] = useState(false);
   const [serverToDelete, setServerToDelete] = useState(null);
   const [showConfirmContainerDelete, setShowConfirmContainerDelete] = useState(false);
@@ -87,7 +88,6 @@ const Dashboard = () => {
   const [infoContainer, setInfoContainer] = useState(null);
 
   const navigate = useNavigate();
-  const menuRef = useRef(null);
 
   // Глобальные обработчики для закрытия меню
   useEffect(() => {
@@ -173,23 +173,6 @@ const Dashboard = () => {
     }
   };
 
-  // Переключение меню MoreVert для контейнера
-  const toggleContainerMenu = (containerId, e) => {
-    e.stopPropagation();
-    setContainerMenuOpen((prev) => ({
-      ...prev,
-      [containerId]: !prev[containerId]
-    }));
-  };
-
-  // Переключение меню MoreVert для сервера
-  const toggleServerMenu = (serverId, e) => {
-    e.stopPropagation();
-    setServerMenuOpen((prev) => ({
-      ...prev,
-      [serverId]: !prev[serverId]
-    }));
-  };
 
   // Функция управления контейнером (start, stop, restart)
   const handleControl = async (containerId, action, serverId) => {
@@ -378,6 +361,7 @@ const Dashboard = () => {
       closeEditServerModal();
       return;
     }
+    // Показываем модальное окно подтверждения обновления сервера
     setShowConfirmServer(true);
     setServerEditSubmitting(false);
   };
@@ -608,7 +592,6 @@ const Dashboard = () => {
                   <p>{server.host}:{server.port}</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  {/* Кнопка для открытия модального окна добавления контейнера */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -619,7 +602,6 @@ const Dashboard = () => {
                   >
                     <AddIcon className="h-6 w-6 text-gray-800 cursor-pointer hover:text-gray-700 transition" />
                   </button>
-                  {/* Серверное меню */}
                   <div className="relative">
                     <button
                       onClick={(e) => {
@@ -653,8 +635,7 @@ const Dashboard = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setServerToDelete(server);
-                            setShowConfirmServerDelete(true);
+                            openServerDeleteModal(server);
                           }}
                           className="flex items-center px-3 py-2 hover:bg-gray-100 w-full"
                         >
@@ -825,6 +806,13 @@ const Dashboard = () => {
         onConfirm={confirmContainerDelete}
         onCancel={() => setShowConfirmContainerDelete(false)}
         loading={containerDeleteLoading}
+      />
+
+      <ConfirmServerModal
+        showConfirmServer={showConfirmServer}
+        setShowConfirmServer={setShowConfirmServer}
+        confirmServerEditSubmit={() => confirmServerEditSubmit(editServer ? editServer.id : null)}
+        serverId={editServer ? editServer.id : null}
       />
 
       <AddContainerModal
