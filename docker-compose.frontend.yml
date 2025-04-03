@@ -3,6 +3,7 @@ version: '3.8'
 services:
   frontend:
     build: .
+    restart: unless-stopped
     container_name: react_frontend
     ports:
       - "8080:80"
