@@ -36,7 +36,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      Cookies.set('access_token', data.access_token, { path: '/', sameSite: 'None', secure: false });
+      Cookies.set('access_token', data.access_token, { path: '/', sameSite: 'Lax', secure: true });
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
