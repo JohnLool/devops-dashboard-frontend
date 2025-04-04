@@ -1,8 +1,6 @@
-# Stage 1: сборка фронтенда с помощью Node и Vite
-FROM node:16-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Копируем package.json и lock-файл (если есть)
 COPY package*.json ./
 
 RUN npm install
