@@ -10,6 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Если access token уже есть в куках, сразу перейти на dashboard
   useEffect(() => {
     const token = Cookies.get('access_token');
     if (token) {
@@ -30,7 +31,8 @@ const Login = () => {
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString()
+        body: formData.toString(),
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -38,7 +40,8 @@ const Login = () => {
       }
 
       const data = await response.json();
-      Cookies.set('access_token', data.access_token, { path: '/', sameSite: 'Lax', secure: true });
+      Cookies.set('access_token', data.token, { path: '/', sameSite: 'Lax', secure: true });
+
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
