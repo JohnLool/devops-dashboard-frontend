@@ -511,10 +511,18 @@ const Dashboard = () => {
   };
 
   // Функция для выхода
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    await fetch('/api/users/logout', {
+      method: 'POST',
+      credentials: 'include'  // чтобы кука была отправлена и удалена
+    });
     Cookies.remove('access_token', { path: '/' });
     navigate('/login');
-  };
+  } catch (err) {
+    console.error("Logout error:", err);
+  }
+};
 
   // Функция для отправки формы создания сервера
   const handleServerFormSubmit = async (e) => {
