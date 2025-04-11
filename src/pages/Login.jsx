@@ -40,7 +40,14 @@ const Login = () => {
       }
 
       const data = await response.json();
-      Cookies.set('access_token', data.token, { path: '/', sameSite: 'Lax', secure: true });
+      const expires = new Date(Date.now() + 30 * 60 * 1000);
+
+      Cookies.set('access_token', data.token, {
+        path: '/',
+        SameSite: 'Lax',
+        secure: true,
+        expires: expires
+      });
 
       navigate('/dashboard');
     } catch (err) {
